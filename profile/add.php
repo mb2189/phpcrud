@@ -33,7 +33,7 @@ if ( isset($_POST['first_name']) && isset($_POST['last_name'])
         return;
     // If checks pass, send POST data to the database
     } else { 
-        $stmt = $pdo->prepare('INSERT INTO Profile
+        $stmt = $pdo->prepare('INSERT INTO profile
             (user_id, first_name, last_name, email, headline, summary)
             VALUES ( :uid, :fn, :ln, :em, :he, :su)');
         $stmt->execute(array(
