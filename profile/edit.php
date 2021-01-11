@@ -5,10 +5,15 @@ session_start();
 require_once 'pdo.php';
 
 $prof_id = $_GET['profile_id'];
+$nm = $pdo->query("SELECT first_name, last_name, email, headline, summary,
+        user_id, profile_id FROM profile WHERE profile_id = ".$prof_id);
+$row = $nm->fetch(PDO::FETCH_ASSOC);
 
 // if the user has tried to access this page without logging in
 if ( ! isset($_SESSION['name'])) {
     die("<p>Please <a href='login.php'>Log In</a> to start</p>");
+} elseif ($_SESSION['user_id'] !== $row['user_id']) {
+    die("<p>ACCESS DENIED</p>");
 }
 
 if ( isset($_POST['cancel'] ) ) {
@@ -51,11 +56,6 @@ if ( isset($_POST['first_name']) && isset($_POST['last_name'])
         
     }
 }
-
-$nm = $pdo->query("SELECT first_name, last_name, email, headline, summary,
-        user_id, profile_id FROM profile WHERE profile_id = ".$prof_id);
-
-$row = $nm->fetch(PDO::FETCH_ASSOC);
 
 ?> 
 

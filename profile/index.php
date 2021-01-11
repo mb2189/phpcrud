@@ -56,11 +56,13 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo(htmlentities($row["headline"]));
     echo "</td>";
     // If the user is logged in, allow them to edit and delete entries to the database
-    if(isset($_SESSION["name"])) {
-        echo("<td>");
-        echo('<a href="edit.php?profile_id='.$row['profile_id'].'">Edit</a> | '); 
-        echo('<a href="delete.php?profile_id='.$row['profile_id'].'">Delete</a>');
-        echo("</td></tr>");    
+    if (isset($_SESSION['name'])) {
+        if($_SESSION["user_id"] === $row["user_id"]) {
+            echo("<td>");
+            echo('<a href="edit.php?profile_id='.$row['profile_id'].'">Edit</a> | '); 
+            echo('<a href="delete.php?profile_id='.$row['profile_id'].'">Delete</a>');
+            echo("</td></tr>"); 
+        }   
     } else {
         echo("</tr>");
     }
